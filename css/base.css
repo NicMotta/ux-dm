@@ -1,0 +1,37 @@
+/* UX Data Mapping — layout: topbar / [pasos | lienzo | detalle]. Utilitario, neutros fríos, color solo para el origen del dato. */
+:root{
+  --bg:#f2f3f7; --panel:#ffffff; --panel2:#f7f8fb; --line:#dde0e9; --line2:#c8cdda;
+  --fg:#161a26; --dim:#5d6578; --faint:#8991a5;
+  --accent:#3140c4; --accent-soft:#e7eafb; --on:#ffffff;
+  --canvas:#e8eaf0; --dot:#c3c8d7;
+  --svc:#0b7285; --hc:#c2410c; --calc:#7c3aed; --danger:#c0262d;
+  --shadow:0 1px 2px rgba(20,24,40,.08),0 8px 24px rgba(20,24,40,.12);
+  --font:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1119; --panel:#161a25; --panel2:#1c2130; --line:#283043; --line2:#38405a;
+  --fg:#e7eaf3; --dim:#a1a9bd; --faint:#767f96;
+  --accent:#8a98ff; --accent-soft:#232b55; --on:#0d1020;
+  --canvas:#11141d; --dot:#2a3144;
+  --svc:#3cc4dc; --hc:#fb923c; --calc:#a78bfa; --danger:#f0636a;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.5);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1119; --panel:#161a25; --panel2:#1c2130; --line:#283043; --line2:#38405a;
+  --fg:#e7eaf3; --dim:#a1a9bd; --faint:#767f96;
+  --accent:#8a98ff; --accent-soft:#232b55; --on:#0d1020;
+  --canvas:#11141d; --dot:#2a3144;
+  --svc:#3cc4dc; --hc:#fb923c; --calc:#a78bfa; --danger:#f0636a;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.5);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:13px/1.45 var(--font);overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+[hidden]{display:none!important}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}

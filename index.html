@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX Data Mapping</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/tree.css">
+<link rel="stylesheet" href="css/canvas.css">
+<link rel="stylesheet" href="css/inspector.css">
+<link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="ico" id="btnLeft" title="Mostrar u ocultar pasos" aria-label="Mostrar u ocultar pasos"><svg class="i" viewBox="0 0 16 16"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M6 2.5v11"/></svg></button>
+    <div class="brand"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="8" height="6" rx="1"/><rect x="11" y="12" width="7" height="5" rx="1"/><path d="M6 9v4h5"/><path d="M9.5 11.2 11.5 13 9.5 14.8"/></svg>UX Data Mapping</div>
+    <input class="projname" id="projName" aria-label="Nombre del proyecto" placeholder="Nombre del proyecto">
+    <div class="spacer"></div>
+    <span class="savestate" id="saveState">Guardado</span>
+    <div class="menu">
+      <button class="btn" id="btnFile">Archivo <svg class="i" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4"/></svg></button>
+      <div class="menu-pop" id="fileMenu" hidden>
+        <button class="mi" data-m="import">Importar JSON…</button>
+        <button class="mi" data-m="exportProject">Exportar proyecto (.json)</button>
+        <button class="mi" data-m="pdfProject">Exportar todo el proyecto en PDF</button>
+        <div class="msep"></div>
+        <button class="mi" data-m="newProject">Nuevo proyecto vacío</button>
+      </div>
+    </div>
+    <button class="ico" id="btnTheme" title="Cambiar tema (auto, claro, oscuro)" aria-label="Cambiar tema"><svg class="i" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1"/></svg></button>
+    <button class="ico" id="btnRight" title="Mostrar u ocultar detalle" aria-label="Mostrar u ocultar detalle"><svg class="i" viewBox="0 0 16 16"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M10 2.5v11"/></svg></button>
+  </header>
+
+  <div class="main" id="main">
+    <aside class="side left">
+      <div class="side-head"><h2>Pasos y casuísticas</h2><div class="head-acts"><button class="ico small" id="toggleAll" title="Colapsar todos los pasos" aria-label="Colapsar todos los pasos"></button><button class="btn small" id="addStep">+ Paso</button></div></div>
+      <div class="scroll"><div class="tree" id="tree"></div></div>
+    </aside>
+
+    <section class="stage" id="stage">
+      <div class="viewport" id="viewport" data-tool="select">
+        <div class="world" id="world"><img id="img" alt="Captura de la pantalla a mapear" draggable="false"><svg id="svg"></svg></div>
+      </div>
+      <div class="empty" id="empty"><div class="dz">
+        <h3>Pegá una captura de la pantalla</h3>
+        <p>Usá Ctrl+V (o ⌘+V), arrastrá la imagen hasta acá o elegí un archivo.</p>
+        <button class="btn primary" id="pickImg">Elegir imagen</button>
+      </div></div>
+
+      <div class="float casebar" id="casebar"></div>
+
+      <div class="float tools" id="tools" role="toolbar" aria-label="Herramientas">
+        <button class="tool on" data-tool="select" title="Seleccionar y mover (V)" aria-label="Seleccionar"><svg class="i" viewBox="0 0 16 16"><path d="M3.5 2.5 12 8l-4.3 1L6 13.5z"/></svg><kbd>V</kbd></button>
+        <button class="tool" data-tool="box" title="Recuadro (R)" aria-label="Recuadro"><svg class="i" viewBox="0 0 16 16"><rect x="2.5" y="3.5" width="11" height="9" rx="1"/></svg><kbd>R</kbd></button>
+        <button class="tool" data-tool="arrow" title="Flecha (A)" aria-label="Flecha"><svg class="i" viewBox="0 0 16 16"><path d="M3 13 13 3M6.5 3H13v6.5"/></svg><kbd>A</kbd></button>
+        <button class="tool" data-tool="pan" title="Mover el lienzo (H o barra espaciadora)" aria-label="Mover lienzo"><svg class="i" viewBox="0 0 16 16"><path d="M5.5 8V3.8a1 1 0 0 1 2 0V7m0-1.7a1 1 0 0 1 2 0V7m0-1a1 1 0 0 1 2 0v3.5a4 4 0 0 1-4 4h-.2a3.6 3.6 0 0 1-3-1.6L2.5 9.5a1 1 0 0 1 1.7-1l1.3 1.5"/></svg><kbd>H</kbd></button>
+        <span class="sep"></span>
+        <button class="tool" id="btnUndo" title="Deshacer (Ctrl+Z)" aria-label="Deshacer"><svg class="i" viewBox="0 0 16 16"><path d="M5.5 3 2.5 6l3 3M3 6h6a4 4 0 0 1 0 8H6"/></svg></button>
+        <button class="tool" id="btnRedo" title="Rehacer (Ctrl+Shift+Z)" aria-label="Rehacer"><svg class="i" viewBox="0 0 16 16"><path d="m10.5 3 3 3-3 3M13 6H7a4 4 0 0 0 0 8h3"/></svg></button>
+        <span class="sep"></span>
+        <button class="tool" id="btnImg" title="Cambiar imagen de la casuística" aria-label="Cambiar imagen"><svg class="i" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5"/><circle cx="6" cy="6.5" r="1.2"/><path d="m2.5 12 3.5-3.5 2.5 2.5 2-2 3 3"/></svg></button>
+      </div>
+
+      <div class="float zoom" id="zoom">
+        <button id="zOut" title="Alejar (−)" aria-label="Alejar">−</button>
+        <button id="zLbl" title="Volver al 100%">100%</button>
+        <button id="zIn" title="Acercar (+)" aria-label="Acercar">+</button>
+        <button id="zFit" title="Ajustar a pantalla (0)">Ajustar</button>
+        <button id="zWheel" title="Qué hace la rueda del mouse">Rueda: zoom</button>
+      </div>
+      <div class="float legend" aria-label="Referencias de color">
+        <span><i style="background:var(--svc)"></i>Servicio</span>
+        <span><i style="background:var(--hc)"></i>Estático</span>
+        <span><i style="background:var(--calc)"></i>Calculado</span>
+      </div>
+    </section>
+
+    <aside class="side right"><div class="scroll"><div class="insp" id="insp"></div></div></aside>
+  </div>
+</div>
+
+<div id="modalRoot"></div>
+<div class="toast" id="toast" hidden></div>
+<input type="file" id="fileImg" accept="image/*" hidden>
+<input type="file" id="fileJson" accept="application/json,.json" hidden>
+
+<script src="js/pdf/pdf-writer.js"></script>
+<script src="js/pdf/pdf-export.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/model.js"></script>
+<script src="js/core/history.js"></script>
+<script src="js/core/storage.js"></script>
+<script src="js/core/io.js"></script>
+<script src="js/core/operations.js"></script>
+<script src="js/canvas/view.js"></script>
+<script src="js/canvas/render.js"></script>
+<script src="js/canvas/selection.js"></script>
+<script src="js/canvas/images.js"></script>
+<script src="js/canvas/events.js"></script>
+<script src="js/ui/panels.js"></script>
+<script src="js/ui/tree.js"></script>
+<script src="js/ui/casebar.js"></script>
+<script src="js/ui/inspector.js"></script>
+<script src="js/ui/modal.js"></script>
+<script src="js/sample.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
