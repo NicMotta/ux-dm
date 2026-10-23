@@ -1,7 +1,7 @@
 'use strict';
 /* Modelo de datos y geometría */
 /* ---------- modelo ---------- */
-function blankData(){return {label:'',source:'service',service:'',method:'GET',endpoint:'',path:'',dtype:'string',format:'',example:'',text:'',i18n:'',rule:'',deps:'',notes:''};}
+function blankData(){return {label:'',source:'service',service:'',dmName:'',dmLink:'',method:'GET',endpoint:'',path:'',dtype:'string',format:'',example:'',text:'',i18n:'',rule:'',deps:'',notes:''};}
 function mkCase(name){return {id:uid(),name:name||'Casuística nueva',description:'',image:null,w:0,h:0,anns:[]};}
 function mkStep(name,caseName){return {id:uid(),name:name||'Paso nuevo',cases:[mkCase(caseName||'Casuística 1')]};}
 function mkProject(name){return {format:'ux-data-mapping',version:1,name:name||'Mi proyecto',steps:[mkStep('Paso 1')]};}

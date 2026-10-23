@@ -131,6 +131,7 @@ const PDFW=(()=>{
     const r=[];
     if(o.source==='service'){
       if(o.service)r.push(['Servicio',o.service]);
+      if(o.dmName||o.dmLink)r.push(['Data Manager',[o.dmName,o.dmLink].filter(Boolean).join('  ·  ')]);
       if(o.endpoint)r.push(['Endpoint',`${o.method} ${o.endpoint}`,1]);
       if(o.path)r.push(['Objeto / campo',o.path,1]);
       r.push(['Tipo',o.dtype+(o.format?'   Formato: '+o.format:'')]);

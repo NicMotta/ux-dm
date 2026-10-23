@@ -8,6 +8,7 @@
 .field textarea{min-height:62px;resize:vertical}
 .mono{font-family:var(--mono)!important;font-size:12px!important}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.group>.lbl{display:block;margin-bottom:4px}
 .seg{display:flex;border:1px solid var(--line2);border-radius:7px;overflow:hidden}
 .seg button{flex:1;border:0;background:var(--panel);padding:6px 4px;font-size:12px;font-weight:500;color:var(--dim);border-right:1px solid var(--line2)}
 .seg button:last-child{border-right:0}

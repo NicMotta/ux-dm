@@ -28,6 +28,7 @@ function renderInspector(){
   h+=`<div class="field"><span class="lbl">Origen del dato</span><div class="seg" role="group" aria-label="Origen del dato">${Object.keys(SRC).map(k=>`<button data-set="source" data-v="${k}" class="${o.source===k?'on':''}">${SRC[k]}</button>`).join('')}</div></div>`;
   if(o.source==='service'){
     h+=fld('Servicio / API','service',o.service,{ph:'payments-api'});
+    h+=`<div class="group"><span class="lbl">Data Manager</span>${fld('Nombre','dmName',o.dmName,{ph:'Customer Data Manager'})}${fld('Link','dmLink',o.dmLink,{ph:'https://…'})}</div>`;
     h+=`<div class="field"><span class="lbl">Método HTTP</span><div class="chips">${METHODS.map(m=>`<button class="chip${o.method===m?' on':''}" data-set="method" data-v="${m}">${m}</button>`).join('')}</div></div>`;
     h+=fld('Endpoint','endpoint',o.endpoint,{mono:1,ph:'/v1/orders/{orderId}'});
     h+=fld('Objeto o campo de la respuesta','path',o.path,{mono:1,ph:'order.totals.grandTotal'});

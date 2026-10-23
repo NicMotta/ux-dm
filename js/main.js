@@ -63,10 +63,11 @@ function bindUI(){
     S.project=normProject(saved.project);
     const st=S.project.steps.find(s=>s.id===saved.stepId)||S.project.steps[0];
     S.stepId=st.id;S.caseId=(st.cases.find(c=>c.id===saved.caseId)||st.cases[0]).id;
+    setSaveState('Guardado en este navegador');
   }else{
-    S.project=makeSample();S.stepId=S.project.steps[0].id;S.caseId=S.project.steps[0].cases[0].id;
+    S.project=mkProject('Mi proyecto');S.stepId=S.project.steps[0].id;S.caseId=S.project.steps[0].cases[0].id;
+    setSaveState('Proyecto nuevo');
   }
-  loadCaseView();refreshAll();setSaveState('Guardado en este navegador');
-  const c=curCase();if(c.anns.length&&!S.selId){/* abre con el detalle de la casuística */}
+  loadCaseView();refreshAll();
 })();
 

@@ -1,7 +1,7 @@
 /* Árbol de pasos y casuísticas */
 .tree{padding:8px}
 .step{margin-bottom:6px}
-.step-row,.case-row{display:flex;align-items:center;gap:6px;border-radius:6px;cursor:pointer}
+.step-row,.case-row{display:flex;align-items:center;gap:6px;border-radius:6px;cursor:pointer;position:relative}
 .step-row{padding:6px 6px;font-weight:600}
 .step-row:hover,.case-row:hover{background:var(--panel2)}
 .chev{transition:transform .12s;color:var(--faint)}
@@ -12,8 +12,9 @@
 .case-row.active{background:var(--accent-soft)}
 .case-row .sub{display:block;font-size:11px;color:var(--faint)}
 .case-row .nm{font-weight:500}
-.acts{display:none;gap:0}
-.step-row:hover .acts,.case-row:hover .acts,.case-row.active .acts{display:flex}
+/* Las acciones flotan sobre el final de la fila: al aparecer no cambian su alto ni recortan el nombre */
+.acts{display:flex;align-items:center;gap:0;position:absolute;right:0;top:0;bottom:0;padding:0 4px 0 6px;background:inherit;border-radius:6px;visibility:hidden}
+.step-row:hover .acts,.case-row:hover .acts{visibility:visible}
 .acts button{width:22px;height:22px;border:0;background:none;border-radius:4px;color:var(--dim);display:grid;place-items:center;padding:0}
 .acts button:hover{background:var(--line);color:var(--fg)}
 .acts button.del:hover{color:var(--danger)}
